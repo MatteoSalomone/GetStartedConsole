@@ -1,5 +1,8 @@
 ﻿using static System.Console;
+using System.Collections.Generic;
+
 using Numbers;
+using Pets;
 
 namespace ConsoleApplication
 {
@@ -9,15 +12,48 @@ namespace ConsoleApplication
     */
     public class Program
     {
-        public static void Main(string[] args)
+        static int Main(string[] args)
         {
-            var generator = new FibonacciGenerator();
-            
-            WriteLine("Fibonacci sequence 1-15:");
-            foreach (var digit in generator.Generate(15))
+            if (args.Length == 0)
             {
-                WriteLine(digit);
+                WriteLine("Usage:");
+                WriteLine("fib: generate Fibonacci sequence 1-15");
+                WriteLine("pets: pet classes tutorial");
+                return 1;
             }
+
+            switch (args[0])
+            {
+                case "fib":
+                    var generator = new FibonacciGenerator();
+                    
+                    WriteLine("Fibonacci sequence 1-15:");
+                    foreach (var digit in generator.Generate(15))
+                    {
+                        WriteLine(digit);
+                    } 
+                    break;
+                case "pets":
+                    List<IPet> pets = new List<IPet>()
+                    {
+                        new Dog(),
+                        new Cat()
+                    };
+
+                    string talk; 
+                    foreach (var pet in pets)
+                    {
+                        talk = pet.TalkToOwner();
+                        WriteLine(talk);
+                    }
+
+                    break;
+                default:
+                    WriteLine("Unrecognized command");
+                    break;
+            }
+
+            return 0;
         }
     }
 }
